@@ -21,6 +21,33 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="lidar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ni4882.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MTIDefinitions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MTIDevice.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MTIDataGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MTISerial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HRMTimeAPI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HRMTimeErrs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QuickUSB.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
