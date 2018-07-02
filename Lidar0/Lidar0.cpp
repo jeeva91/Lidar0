@@ -28,8 +28,7 @@ int main(int argc, char* argv[])
 	float dly_min = 0;
 	float dly_max = 100;
 	float dly_steps = 10;
-	int tdc_time = 100;
-	char filename[256] = "lidar.csv";
+	int tdc_time = 100;		// in millisecond
 	char portno[5] = "COM5";
 
 	if ((argc != 10) && (argc!=1)) {
@@ -45,7 +44,7 @@ int main(int argc, char* argv[])
 		dly_min = (float)atof(argv[4]);
 		dly_max = (float)atof(argv[5]);
 		dly_steps = (float)atof(argv[6]);
-		tdc_time = atoi(argv[7]);
+		tdc_time = atoi(argv[7]);	// in milli-sec
 		strcpy_s(filename, argv[8]);
 		strcpy_s(portno, argv[9]);
 
@@ -196,9 +195,14 @@ int main(int argc, char* argv[])
 				Run the histogram for the programmed time in ms.
 				*/
 				
-
+				// use QueryPerformanceCounter later
+				LARGE_INTEGER start;
+				LARGE_INTEGER stop;
+				LARGE_INTEGER freq;
+				QueryPerformanceFrequency(&freq);
+				double frequency = (double)freq.QuadPart;
 				if (error == HRM_OK)
-					for (i = GetTickCount(); (Uword)(GetTickCount() - i) < tdc_time;);
+					for (i = QueryPerformanceCounter(&start); ((double)(QueryPerformanceCounter(&stop) - i))/frequency < tdc_time;);
 				/*
 				Stop the histogram process.
 				*/
