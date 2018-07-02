@@ -29,6 +29,7 @@ int main(int argc, char* argv[])
 	float dly_max = 100;
 	float dly_steps = 10;
 	int tdc_time = 100;		// in millisecond
+	char filename[256] = "lidar.csv";
 	char portno[5] = "COM5";
 
 	if ((argc != 10) && (argc!=1)) {
@@ -165,21 +166,24 @@ int main(int argc, char* argv[])
 	fopen_s(&fl, filename, "w+t");
 	fprintf(fl, "delay, y, x, counts\n ");
 	
-	for (float dly_itr = dly_min; dly_itr <= dly_max; dly_itr = dly_itr + dly_steps) {
-		auto comm = std::to_string(dly_itr);
-		comm = "DLY " + comm;
-		unsigned char out = OUTCHAR;
-		ibwrt(dly_ud, comm.c_str(), comm.length());
-		for (float yitr = xy_min; yitr <= xy_max; yitr = yitr + xy_steps) {
-		for (float xitr = xy_min; xitr <= xy_max; xitr = xitr + xy_steps) {
-			
-				mti->SendDataStream(&xitr, &yitr, &out, 1);
+	for (float yitr = xy_min; yitr <= xy_max; yitr = yitr + xy_steps) 
+	{
+		for (float xitr = xy_min; xitr <= xy_max; xitr = xitr + xy_steps) 
+		{
+			mti->SendDataStream(&xitr, &yitr, &out, 1);
 
-				LastError = mti->GetLastError();
-				if (LastError != MTIError::MTI_SUCCESS) {
-					printf("Error settinglocation");
-
-				}
+			LastError = mti->GetLastError();
+			if (LastError != MTIError::MTI_SUCCESS) 
+			{
+				printf("Error settinglocation");
+			}
+	
+			for (float dly_itr = dly_min; dly_itr <= dly_max; dly_itr = dly_itr + dly_steps) 
+			{
+				auto comm = std::to_string(dly_itr);
+				comm = "DLY " + comm;
+				unsigned char out = OUTCHAR;
+				ibwrt(dly_ud, comm.c_str(), comm.length());
 				/*
 				Clear the memory.
 				*/
@@ -217,8 +221,8 @@ int main(int argc, char* argv[])
 				/*
 				Open the file and set the headings.
 				*/
-				if (error == HRM_OK) {
-					
+				if (error == HRM_OK) 
+				{
 					for (i = 0, j = 0, k = 0; i != MEMORY_SZ; i++)
 					{
 						j = (j == 0 && buffer[i]) ? i : j;
@@ -228,7 +232,6 @@ int main(int argc, char* argv[])
 
 				}
 			}
-
 		}
 	}
 	if (fl)
