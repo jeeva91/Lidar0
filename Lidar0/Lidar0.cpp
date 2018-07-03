@@ -203,10 +203,19 @@ int main(int argc, char* argv[])
 				LARGE_INTEGER start;
 				LARGE_INTEGER stop;
 				LARGE_INTEGER freq;
-				QueryPerformanceFrequency(&freq);
-				double frequency = (double)freq.QuadPart;
+			
 				if (error == HRM_OK)
-					for (i = QueryPerformanceCounter(&start); ((double)(QueryPerformanceCounter(&stop) - i))/frequency < tdc_time;);
+				{
+					QueryPerformanceFrequency(&freq);
+					double frequency = (double)freq.QuadPart;
+					QueryPerformanceCounter(&start);
+					double timep = 0.0;
+					for (; timep < tdc_time;)
+					{
+						QueryPerformanceCounter(&stop);
+						timep = (double)(stop.QuadPart - start.QuadPart) / frequency * 1000;
+					}
+				}
 				/*
 				Stop the histogram process.
 				*/
